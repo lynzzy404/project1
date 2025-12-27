@@ -1,597 +1,227 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="cyberpunk">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAYFLOW DASH - ₭₳Ⱡł Edition</title>
-    <link rel="nofollow" href="https://justpaste.it/redirect/ku0ey/https%3A%2F%2Fcdnjs.cloudflare.com%2Fajax%2Flibs%2Ffont-awesome%2F6.4.0%2Fcss%2Fall.min.css">
-    <link rel="nofollow" href=''>
-    <style>
-        /* RESET & VARIABLES */
-        :root {
-            --primary: #00ff9d;
-            --secondary: #7700ff;
-            --dark: #0a0a14;
-            --light: #f0f0ff;
-            --danger: #ff0055;
-            --warning: #ffaa00;
-            --radius: 12px;
-            --shadow: 0 10px 30px rgba(0, 255, 157, 0.2);
-        }
-
-        [data-theme="matrix"] {
-            --primary: #00ff41;
-            --secondary: #0d0208;
-            --dark: #000;
-            --light: #00ff41;
-        }
-
-        * {
-            0;
-            padding: 0;
-            box-sizing: border-box;
-            'Segoe UI', system-ui, sans-serif;
-        }
-
-        body {
-            background: var(--dark);
-            color: var(--light);
-            min-height: 100vh;
-            overflow-x: hidden;
-            padding: 20px;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(119, 0, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(0, 255, 157, 0.1) 0%, transparent 20%);
-        }
-
-        /* HEADER */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: rgba(10, 10, 20, 0.8);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            border: 1px solid var(--primary);
-            30px;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: scan 3s infinite linear;
-        }
-
-        @keyframes scan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo i {
-            font-size: 2.5rem;
-            color: var(--primary);
-            filter: drop-shadow(0 0 10px var(--primary));
-        }
-
-        .logo h1 {
-            font-size: 2rem;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
-        }
-
-        .theme-switcher {
-            display: flex;
-            gap: 10px;
-        }
-
-        .theme-btn {
-            padding: 10px 20px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--secondary);
-            color: var(--light);
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .theme-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-
-        /* DASHBOARD GRID */
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            40px;
-        }
-
-        .widget {
-            background: rgba(20, 20, 30, 0.7);
-            backdrop-filter: blur(15px);
-            border-radius: var(--radius);
-            padding: 25px;
-            border: 1px solid rgba(0, 255, 157, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            min-height: 280px;
-        }
-
-        .widget:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 255, 157, 0.3);
-        }
-
-        .widget::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0,255,157,0.1) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
-        .widget:hover::after {
-            opacity: 1;
-        }
-
-        .widget-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(0, 255, 157, 0.3);
-        }
-
-        .widget-title h2 {
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .widget-title i {
-            color: var(--primary);
-        }
-
-        /* TASK MANAGER */
-        .task-input {
-            display: flex;
-            gap: 10px;
-            20px;
-        }
-
-        .task-input input {
-            flex: 1;
-            padding: 12px 15px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--secondary);
-            border-radius: 50px;
-            color: var(--light);
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .task-input input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
-        }
-
-        .task-input button {
-            padding: 12px 25px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            border: none;
-            border-radius: 50px;
-            color: var(--dark);
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .task-input button:hover {
-            transform: scale(1.05);
-        }
-
-        .task-list {
-            list-style: none;
-            max-height: 300px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .task-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 15px;
-            background: rgba(255,255,255,0.03);
-            10px;
-            border-radius: 8px;
-            border-left: 4px solid var(--primary);
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .task-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .task-actions button {
-            background: none;
-            border: none;
-            color: var(--light);
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
-        }
-
-        .task-actions .complete:hover { color: var(--primary); }
-        .task-actions .delete:hover { color: var(--danger); }
-
-        /* EXPENSE TRACKER */
-        .expense-form {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 10px;
-            20px;
-        }
-
-        .expense-form input, .expense-form select {
-            padding: 10px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(119, 0, 255, 0.5);
-            border-radius: 6px;
-            color: var(--light);
-        }
-
-        .expense-list {
-            font-size: 0.9rem;
-        }
-
-        .expense-item {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        /* FOOTER */
-        .footer {
-            text-align: center;
-            padding: 25px;
-            30px;
-            border-top: 1px solid rgba(0, 255, 157, 0.2);
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
-        }
-
-        .footer .signature {
-            monospace;
-            color: var(--primary);
-            10px;
-            letter-spacing: 2px;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-            .expense-form {
-                grid-template-columns: 1fr;
-            }
-            .header {
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
-    </style>
+    <meta name="description" content="Website Anniversary Romantis - Perjalanan Cinta Kita">
+    <title>Anniversary Kita | Perjalanan Cinta</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Preload Music -->
+    <link rel="preload" as="fetch" href="https://assets.mixkit.co/music/preview/mixkit-loving-you-117.mp3">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
 </head>
 <body>
-    <!-- HEADER -->
-    <header class="header">
-        <div class="logo">
-            <i class="fas fa-bolt"></i>
-            <h1>DAYFLOW DASH <span style="font-size: 0.8rem; color: var(--primary);">₭₳Ⱡł v99</span></h1>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="heart-loader"></div>
+            <p class="loading-text">Memuat cinta...</p>
         </div>
-        <div class="theme-switcher">
-            <button class="theme-btn" data-theme="cyberpunk"><i class="fas fa-robot"></i> Cyberpunk</button>
-            <button class="theme-btn" data-theme="matrix"><i class="fas fa-code"></i> Matrix</button>
-            <button class="theme-btn" data-theme="dark"><i class="fas fa-moon"></i> Dark</button>
+    </div>
+
+    <!-- Background Elements -->
+    <div class="background-effects">
+        <div class="hearts-container" id="hearts-container"></div>
+        <div class="petals-container" id="petals-container"></div>
+        <div class="sparkles-container" id="sparkles-container"></div>
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player">
+        <div class="music-controls">
+            <button id="playPauseBtn" class="music-btn" aria-label="Play/Pause">
+                <svg id="playIcon" class="music-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                <svg id="pauseIcon" class="music-icon hidden" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+            </button>
+            <div class="volume-control">
+                <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider">
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button id="fabBtn" class="fab" aria-label="Kirim Pesan Cinta">
+        <span class="fab-icon">💌</span>
+        <span class="fab-text">Kirim Pesan</span>
+    </button>
+
+    <!-- Header / Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">Selamat Anniversary</span>
+                <span class="title-line highlight">Sayangku</span>
+            </h1>
+            <p class="hero-subtitle">Setiap detik bersamamu adalah kisah terindah dalam hidupku</p>
+            <div class="love-counter">
+                <div class="counter-item">
+                    <span id="daysCount" class="counter-number">000</span>
+                    <span class="counter-label">Hari</span>
+                </div>
+                <div class="counter-item">
+                    <span id="hoursCount" class="counter-number">00</span>
+                    <span class="counter-label">Jam</span>
+                </div>
+                <div class="counter-item">
+                    <span id="minutesCount" class="counter-number">00</span>
+                    <span class="counter-label">Menit</span>
+                </div>
+            </div>
+            <button id="startJourneyBtn" class="cta-button">
+                <span>Mulai Perjalanan Cinta Kita</span>
+                <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </button>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Scroll untuk kenangan</span>
+            <div class="scroll-arrow"></div>
         </div>
     </header>
 
-    <!-- DASHBOARD -->
-    <main class="dashboard">
-        <!-- TASK MANAGER WIDGET -->
-        <section class="widget">
-            <div class="widget-title">
-                <h2><i class="fas fa-tasks"></i> Task Manager</h2>
-                <span id="task-count">0 tasks</span>
-            </div>
-            <div class="task-input">
-                <input type="text" id="task-input" placeholder="Tambahkan task baru...">
-                <button id="add-task"><i class="fas fa-plus"></i> Add</button>
-            </div>
-            <ul class="task-list" id="task-list">
-                <!-- Tasks will be added here dynamically -->
-            </ul>
-        </section>
-
-        <!-- EXPENSE TRACKER WIDGET -->
-        <section class="widget">
-            <div class="widget-title">
-                <h2><i class="fas fa-chart-line"></i> Expense Tracker</h2>
-                <span id="total-expense">Rp 0</span>
-            </div>
-            <div class="expense-form">
-                <input type="text" id="expense-desc" placeholder="Keterangan">
-                <input type="number" id="expense-amount" placeholder="Jumlah">
-                <select id="expense-category">
-                    <option value="food">Makanan</option>
-                    <option value="transport">Transport</option>
-                    <option value="shopping">Belanja</option>
-                    <option value="other">Lainnya</option>
-                </select>
-            </div>
-            <button id="add-expense" style="width:100%; padding:12px; 20px;">Tambah Pengeluaran</button>
-            <div class="expense-list" id="expense-list">
-                <div class="expense-item header-item">
-                    <strong>Keterangan</strong>
-                    <strong>Jumlah</strong>
-                    <strong>Kategori</strong>
+    <!-- Main Content -->
+    <main>
+        <!-- Love Letter Section -->
+        <section class="love-letter-section">
+            <div class="container">
+                <h2 class="section-title">Surat Cinta Untukmu</h2>
+                <div class="letter-container">
+                    <div class="letter" id="loveLetter">
+                        <div class="letter-front">
+                            <div class="letter-seal">
+                                <div class="seal-heart">❤️</div>
+                                <div class="seal-text">BUKA</div>
+                            </div>
+                            <h3 class="letter-title">Untuk Yang Tercinta</h3>
+                            <p class="letter-hint">Klik untuk membuka pesan rahasia...</p>
+                        </div>
+                        <div class="letter-back">
+                            <div class="letter-content">
+                                <h3 class="letter-back-title">Untuk Cintaku,</h3>
+                                <p class="letter-text">
+                                    Setiap hari bersamamu adalah halaman baru dalam buku kisah terindah hidupku. 
+                                    Senyumanmu adalah matahari yang menghangatkan hari-hariku, tatapanmu adalah bintang 
+                                    yang menerangi jalanku. Terima kasih sudah menjadi bagian dari setiap detik kebahagiaanku.
+                                </p>
+                                <p class="letter-text">
+                                    Aku bersyukur untuk setiap tawa, setiap pelukan, dan setiap momen yang kita lewati bersama. 
+                                    Kamu adalah jawaban dari semua doaku.
+                                </p>
+                                <p class="letter-signature">
+                                    Dengan cinta yang tak terhingga,<br>
+                                    <span class="signature-name">Yang Selalu Mencintaimu</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- QUICK NOTES WIDGET -->
-        <section class="widget">
-            <div class="widget-title">
-                <h2><i class="fas fa-sticky-note"></i> Quick Notes</h2>
-                <button id="save-note" style="background:var(--primary); color:black; border:none; padding:5px 15px; border-radius:50px; cursor:pointer;">Save</button>
+        <!-- Gallery Section -->
+        <section class="gallery-section" id="gallery">
+            <div class="container">
+                <h2 class="section-title">Galeri Kenangan Kita</h2>
+                <p class="section-subtitle">Momen-momen indah yang abadi dalam memori</p>
+                <div class="gallery-grid">
+                    <!-- Photo items will be generated by JavaScript -->
+                </div>
             </div>
-            <textarea id="note-text" placeholder="Tulis catatan cepat di sini... (Markdown didukung)" style="width:100%; height:200px; background:rgba(0,0,0,0.3); border:1px solid var(--secondary); border-radius:8px; color:var(--light); padding:15px; resize:vertical; outline:none;"></textarea>
-            <div id="note-preview" style="15px; padding:10px; background:rgba(0,0,0,0.2); border-radius:8px; min-height:50px;"></div>
         </section>
 
-        <!-- SYSTEM MONITOR WIDGET -->
-        <section class="widget">
-            <div class="widget-title">
-                <h2><i class="fas fa-desktop"></i> System Monitor</h2>
-                <i class="fas fa-sync-alt" id="refresh-monitor" style="cursor:pointer;"></i>
-            </div>
-            <div id="monitor-data">
-                <p><i class="fas fa-battery-half"></i> <span id="battery-status">Checking...</span></p>
-                <p><i class="fas fa-wifi"></i> <span id="connection-status">Checking...</span></p>
-                <p><i class="fas fa-calendar-day"></i> <span id="date-time">Loading...</span></p>
-                <p><i class="fas fa-database"></i> <span id="storage-status">Checking storage...</span></p>
+        <!-- Timeline Section -->
+        <section class="timeline-section">
+            <div class="container">
+                <h2 class="section-title">Timeline Cinta Kita</h2>
+                <div class="timeline">
+                    <!-- Timeline items will be generated by JavaScript -->
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- Footer -->
     <footer class="footer">
-        <p>DAYFLOW DASH - Sistem Efisiensi Harian ₭₳Ⱡł indonet v99 | <span id="visitor-count">1</span> Active Session</p>
-        <p class="signature">>_ Mode: BAYANGAN AKTIF | No PHP | Pure Client-Side Intelligence</p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-heart">❤️</div>
+                <h3 class="footer-title">Terus Bersama, Selamanya</h3>
+                <p class="footer-message">
+                    Untuk <span class="partner-name">[Nama Kamu & Pasangan]</span>,<br>
+                    Semoga cinta kita terus tumbuh dan bersinar selamanya.
+                </p>
+                <p class="footer-copyright">Dibuat dengan ❤️ | Anniversary Special</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- JAVASCRIPT -->
-    <script>
-        // INITIALIZATION
-        console.log('₭₳Ⱡł indonet v99 - Dayflow Dash Initialized');
-        
-        // THEME SWITCHER
-        document.querySelectorAll('.theme-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const theme = btn.getAttribute('data-theme');
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('dayflow-theme', theme);
-            });
-        });
-
-        // LOAD SAVED THEME
-        const savedTheme = localStorage.getItem('dayflow-theme') || 'cyberpunk';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-
-        // TASK MANAGER
-        let tasks = JSON.parse(localStorage.getItem('dayflow-tasks')) || [];
-        const taskInput = document.getElementById('task-input');
-        const addTaskBtn = document.getElementById('add-task');
-        const taskList = document.getElementById('task-list');
-        const taskCount = document.getElementById('task-count');
-
-        function renderTasks() {
-            taskList.innerHTML = '';
-            tasks.forEach((task, index) => {
-                const li = document.createElement('li');
-                li.className = 'task-item';
-                li.innerHTML = `
-                    <span>${task.text}</span>
-                    <div class="task-actions">
-                        <button class="complete" onclick="toggleTask(${index})"><i class="fas ${task.done ? 'fa-undo' : 'fa-check'}"></i></button>
-                        <button class="delete" onclick="deleteTask(${index})"><i class="fas fa-trash"></i></button>
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="modal">
+        <div class="modal-content">
+            <button id="closeModal" class="modal-close" aria-label="Close">&times;</button>
+            <button id="prevBtn" class="modal-nav prev" aria-label="Previous">‹</button>
+            <button id="nextBtn" class="modal-nav next" aria-label="Next">›</button>
+            <div class="modal-image-container">
+                <img id="modalImage" class="modal-image" src="" alt="">
+                <div class="modal-info">
+                    <h3 id="modalTitle" class="modal-title"></h3>
+                    <p id="modalDescription" class="modal-description"></p>
+                    <div class="modal-counter">
+                        <span id="currentIndex">1</span> / <span id="totalImages">6</span>
                     </div>
-                `;
-                if (task.done) {
-                    li.style.opacity = '0.6';
-                    li.style.borderLeftColor = 'var(--warning)';
-                }
-                taskList.appendChild(li);
-            });
-            taskCount.textContent = `${tasks.length} task${tasks.length !== 1 ? 's' : ''}`;
-            localStorage.setItem('dayflow-tasks', JSON.stringify(tasks));
-        }
-
-        window.addTask = function() {
-            const text = taskInput.value.trim();
-            if (text) {
-                tasks.push({ text, done: false });
-                taskInput.value = '';
-                renderTasks();
-            }
-        };
-
-        window.toggleTask = function(index) {
-            tasks[index].done = !tasks[index].done;
-            renderTasks();
-        };
-
-        window.deleteTask = function(index) {
-            tasks.splice(index, 1);
-            renderTasks();
-        };
-
-        addTaskBtn.addEventListener('click', window.addTask);
-        taskInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') window.addTask();
-        });
-
-        // EXPENSE TRACKER
-        let expenses = JSON.parse(localStorage.getItem('dayflow-expenses')) || [];
-        const expenseDesc = document.getElementById('expense-desc');
-        const expenseAmount = document.getElementById('expense-amount');
-        const expenseCategory = document.getElementById('expense-category');
-        const addExpenseBtn = document.getElementById('add-expense');
-        const expenseList = document.getElementById('expense-list');
-        const totalExpense = document.getElementById('total-expense');
-
-        function renderExpenses() {
-            expenseList.innerHTML = `
-                <div class="expense-item header-item">
-                    <strong>Keterangan</strong>
-                    <strong>Jumlah</strong>
-                    <strong>Kategori</strong>
                 </div>
-            `;
-            let total = 0;
-            expenses.slice(-5).forEach(exp => {
-                const item = document.createElement('div');
-                item.className = 'expense-item';
-                item.innerHTML = `
-                    <span>${exp.desc}</span>
-                    <span>Rp ${exp.amount.toLocaleString()}</span>
-                    <span>${exp.category}</span>
-                `;
-                expenseList.appendChild(item);
-                total += exp.amount;
-            });
-            totalExpense.textContent = `Rp ${total.toLocaleString()}`;
-            localStorage.setItem('dayflow-expenses', JSON.stringify(expenses));
-        }
+            </div>
+        </div>
+    </div>
 
-        addExpenseBtn.addEventListener('click', () => {
-            const desc = expenseDesc.value.trim();
-            const amount = parseFloat(expenseAmount.value);
-            const category = expenseCategory.value;
-            
-            if (desc && amount > 0) {
-                expenses.push({ desc, amount, category, date: new Date().toLocaleDateString() });
-                expenseDesc.value = '';
-                expenseAmount.value = '';
-                renderExpenses();
-            }
-        });
+    <!-- Message Modal -->
+    <div id="messageModal" class="modal message-modal">
+        <div class="modal-content message-content">
+            <button id="closeMessageModal" class="modal-close" aria-label="Close">&times;</button>
+            <h3 class="modal-title">Kirim Pesan Cinta</h3>
+            <form id="loveMessageForm" class="message-form">
+                <div class="form-group">
+                    <label for="messageTo">Untuk:</label>
+                    <input type="text" id="messageTo" placeholder="Nama pasanganmu" required>
+                </div>
+                <div class="form-group">
+                    <label for="messageFrom">Dari:</label>
+                    <input type="text" id="messageFrom" placeholder="Namamu" required>
+                </div>
+                <div class="form-group">
+                    <label for="messageText">Pesan Cinta:</label>
+                    <textarea id="messageText" rows="5" placeholder="Tuliskan pesan cintamu di sini..." required></textarea>
+                </div>
+                <button type="submit" class="submit-button">
+                    <span>Kirim dengan Cinta</span>
+                    <span class="heart-icon">❤️</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
-        // QUICK NOTES
-        const noteText = document.getElementById('note-text');
-        const notePreview = document.getElementById('note-preview');
-        const saveNoteBtn = document.getElementById('save-note');
+    <!-- Audio Element -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-loving-you-117.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 
-        noteText.value = localStorage.getItem('dayflow-note') || '';
-        notePreview.innerHTML = marked.parse(noteText.value || '*Nothing yet*');
-
-        noteText.addEventListener('input', () => {
-            notePreview.innerHTML = marked.parse(noteText.value || '*Nothing yet*');
-        });
-
-        saveNoteBtn.addEventListener('click', () => {
-            localStorage.setItem('dayflow-note', noteText.value);
-            alert('Note saved locally!');
-        });
-
-        // SYSTEM MONITOR
-        function updateMonitor() {
-            // Date & Time
-            const now = new Date();
-            document.getElementById('date-time').textContent = 
-                `${now.toLocaleDateString('id-ID')} ${now.toLocaleTimeString('id-ID')}`;
-            
-            // Connection Status
-            document.getElementById('connection-status').textContent = 
-                navigator.onLine ? 'Online' : 'Offline';
-            
-            // Battery API
-            if ('getBattery' in navigator) {
-                navigator.getBattery().then(battery => {
-                    document.getElementById('battery-status').textContent = 
-                        `${Math.round(battery.level * 100)}% ${battery.charging ? '⚡' : ''}`;
-                });
-            }
-            
-            // Storage Estimation
-            if ('storage' in navigator && 'estimate' in navigator.storage) {
-                navigator.storage.estimate().then(estimate => {
-                    const used = (estimate.usage / 1024 / 1024).toFixed(1);
-                    const quota = (estimate.quota / 1024 / 1024).toFixed(1);
-                    document.getElementById('storage-status').textContent = 
-                        `${used} MB / ${quota} MB used`;
-                });
-            }
-        }
-
-        document.getElementById('refresh-monitor').addEventListener('click', updateMonitor);
-        setInterval(updateMonitor, 30000);
-        updateMonitor();
-
-        // VISITOR COUNTER (Simulasi)
-        let visitorCount = parseInt(localStorage.getItem('dayflow-visitors')) || 1;
-        document.getElementById('visitor-count').textContent = visitorCount;
-        localStorage.setItem('dayflow-visitors', visitorCount + 1);
-
-        // SERVICE WORKER REGISTRATION (PWA)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('SW registered: ', reg))
-                    .catch(err => console.log('SW registration failed: ', err));
-            });
-        }
-
-        // INITIAL RENDER
-        renderTasks();
-        renderExpenses();
-        updateMonitor();
-    </script>
-    
-    <!-- MARKDOWN PARSER LIBRARY -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
